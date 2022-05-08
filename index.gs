@@ -197,7 +197,7 @@ function createNewSheet(name) {
  * 列をまとめて削除
  * @params {sheet} sheet - 対象のシート
  * @params {number} columnPosition - 開始列
- * @param {number} howMany - 終了列
+ * @param {number} howMany - いくつ消すか
  */
 function deleteSheetColumns(sheet, columnPosition, howMany) {
   try {
