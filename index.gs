@@ -117,10 +117,7 @@ function getUrls() {
   const entryUrls = mySheet.getRange(`D3:D${mySheetLastRow}`).getValues()
   const readUrls = readSheet.getRange(`C2:C${readSheetLastRow}`).getValues()
   const allUrls = entryUrls.concat(readUrls)
-  const urls = []
-  for (const url of allUrls) {
-    urls.push(url[0])
-  }
+  const urls = allUrls.map(url => { return url[0] })
   return urls
 }
 function setUp() {
@@ -128,7 +125,7 @@ function setUp() {
   //シートを1つ追加「読了」にリネーム
 
   //リーディングシート上2つを青色で塗りつぶす
-  
+
 
   //変更トリガーを追加
 
