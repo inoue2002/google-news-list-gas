@@ -134,6 +134,19 @@ function setUp() {
 
   //rssトリガーを追加
 /**
+ * 新しいシートの作成&名前を変更
+ * @param {string} name - 変えたい名前
+ * @return {sheet} newSheet - 追加したシート
+ */
+function createNewSheet(name) {
+  const mySheet = SpreadsheetApp.getActiveSpreadsheet()
+  //スプレッドシートに新しいシートを追加挿入
+  let newSheet = mySheet.insertSheet()
+  //追加挿入したシートに名前を設定
+  newSheet.setName(name)
+  return newSheet
+}
+/**
  * 列をまとめて削除
  * @params {sheet} sheet - 対象のシート
  * @params {number} columnPosition - 開始列
