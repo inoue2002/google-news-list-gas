@@ -133,4 +133,16 @@ function setUp() {
   //変更トリガーを追加
 
   //rssトリガーを追加
+/**
+ * 列をまとめて削除
+ * @params {sheet} sheet - 対象のシート
+ * @params {number} columnPosition - 開始列
+ * @param {string} howMany - 終了列
+ */
+function deleteSheetColumns(sheet, columnPosition, howMany) {
+  try {
+    sheet.deleteColumns(columnPosition, howMany)
+  } catch (e) {
+    console.error('deleteSheetColumnsErr:', e)
+  }
 }
