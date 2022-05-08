@@ -6,7 +6,7 @@ const searchWord = '滋賀県+実証実験'
  */
 const rss = () => {
   //最終更新日を取得してパラメータに追加する
-  const mySheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
+  const mySheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('リーディングシート')
   let targetUrl
   try {
     const lastUpdate = Utilities.formatDate(mySheet.getRange("E1").getValue(), "JST", "yyyy/MM/dd")
@@ -79,7 +79,7 @@ function editMain() {
     //チェックが入った行を取得
     const row = editCell.getRow()
     const column = editCell.getColumn()
-    if (editSheetName === 'リーディングリスト') {
+    if (editSheetName === 'リーディングシート') {
       const entry = {
         pubDate: editSheet.getRange(row, 2).getValue(),
         title: editSheet.getRange(row, 3).getValue(),
