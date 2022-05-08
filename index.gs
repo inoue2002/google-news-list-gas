@@ -7,7 +7,7 @@ const searchWord = '滋賀県+実証実験'
 const rss = () => {
   //最終更新日を取得してパラメータに追加する
   const mySheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
-  let targetUrl;
+  let targetUrl
   try {
     const lastUpdate = Utilities.formatDate(mySheet.getRange("E1").getValue(), "JST", "yyyy/MM/dd")
     console.log('最終更新日', lastUpdate)
@@ -19,12 +19,12 @@ const rss = () => {
   const xml = UrlFetchApp.fetch(targetUrl).getContentText()
   const document = XmlService.parse(xml)
   const root = document.getRootElement()
-  const channel = root.getChild('channel');
-  const entries = channel.getChildren('item');
+  const channel = root.getChild('channel')
+  const entries = channel.getChildren('item')
   //古い順番に並べる
   entries.reverse()
   console.log(`${entries.length}件の記事を取得しました・・・・`)
-  let count = 1;
+  let count = 1
   for (const entry of entries) {
     const link = entry.getChild('link').getText()
     if (!urls.includes(link)) {
@@ -35,15 +35,15 @@ const rss = () => {
       mySheet.getRange(appendRow.getLastRow(), 1).insertCheckboxes(true)
       if (ogpUrl) {
         try {
-          const image = SpreadsheetApp.newCellImage().setSourceUrl(ogpUrl).setAltTextTitle("OGP").setAltTextDescription("OGP").build();
-          mySheet.getRange(appendRow.getLastRow(), 5).setValue(image);
+          const image = SpreadsheetApp.newCellImage().setSourceUrl(ogpUrl).setAltTextTitle("OGP").setAltTextDescription("OGP").build()
+          mySheet.getRange(appendRow.getLastRow(), 5).setValue(image)
         } catch (e) {
         }
       }
       console.log(`${count}件目の追加を行いました・・・`)
-      count++;
+      count++
       mySheet.getRange("E1").setValue(Utilities.formatDate(new Date(), "JST", "yyyy/MM/dd HH:mm:ss"))
-    };
+    }
   }
   console.log(`処理終了：${count - 1}件/${entries.length}件中の記事を新しく追加しました。`)
 }
