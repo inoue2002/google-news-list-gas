@@ -148,32 +148,32 @@ function setUp() {
     mySheet.getRange("C2").setValue("title")
     mySheet.getRange("D2").setValue("url")
     mySheet.getRange("E2").setValue("ogp")
-    mySheet.setColumnWidth(1, 200);
-    mySheet.setColumnWidth(2, 200);
-    mySheet.setColumnWidth(3, 600);
-    mySheet.setColumnWidth(4, 100);
-    mySheet.setColumnWidth(5, 400);
+    mySheet.setColumnWidth(1, 200)
+    mySheet.setColumnWidth(2, 200)
+    mySheet.setColumnWidth(3, 600)
+    mySheet.setColumnWidth(4, 100)
+    mySheet.setColumnWidth(5, 400)
 
     //読了シートのスタイル設定
     readSheet.getRange('A1:C1').setBackground("#18ada8").setFontColor("#ffffff").setFontWeight("bold")
     readSheet.getRange("A1").setValue('date')
     readSheet.getRange("B1").setValue('title')
     readSheet.getRange("C1").setValue('url')
-    readSheet.setColumnWidth(1, 200);
-    readSheet.setColumnWidth(2, 600);
-    readSheet.setColumnWidth(3, 200);
+    readSheet.setColumnWidth(1, 200)
+    readSheet.setColumnWidth(2, 600)
+    readSheet.setColumnWidth(3, 200)
 
     //変更トリガーを追加
     ScriptApp.newTrigger("editMain")
       .forSpreadsheet(spreadsheetId)
       .onChange()
-      .create();
+      .create()
 
     //rssトリガーを追加
     ScriptApp.newTrigger("rss")
       .timeBased()
       .everyHours(3)
-      .create();
+      .create()
 
   } catch (e) {
     console.error('setUpErr:', e)
