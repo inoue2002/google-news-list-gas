@@ -124,15 +124,62 @@ function getUrls() {
   return urls
 }
 function setUp() {
-  //シート1を「リーディングシート」にリネーム
-  //シートを1つ追加「読了」にリネーム
+  try {
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+    const spreadsheetId = spreadsheet.getId()
+    const mySheet = spreadsheet.getSheetByName('シート1')
 
-  //リーディングシート上2つを青色で塗りつぶす
+    //シート1を「リーディングシート」にリネーム
+    mySheet.setName('リーディングシート')
 
+    //シートを1つ追加「読了」にリネーム
+    const readSheet = createNewSheet('読了')
 
-  //変更トリガーを追加
+    //FからZを削除してAからEのみに
+    deleteSheetColumns(mySheet, 6, 21)
+    //DからZを削除してAからCのみに
+    deleteSheetColumns(readSheet, 4, 23)
 
-  //rssトリガーを追加
+    //リーディングシートのスタイル設定
+    mySheet.getRange('A1:E2').setBackground("#18ada8").setFontColor("#ffffff").setFontWeight("bold")
+    mySheet.getRange("D1").setValue("最終更新")
+    mySheet.getRange("A2").setValue("read")
+    mySheet.getRange("B2").setValue("date")
+    mySheet.getRange("C2").setValue("title")
+    mySheet.getRange("D2").setValue("url")
+    mySheet.getRange("E2").setValue("ogp")
+    mySheet.setColumnWidth(1, 200);
+    mySheet.setColumnWidth(2, 200);
+    mySheet.setColumnWidth(3, 600);
+    mySheet.setColumnWidth(4, 100);
+    mySheet.setColumnWidth(5, 400);
+
+    //読了シートのスタイル設定
+    readSheet.getRange('A1:C1').setBackground("#18ada8").setFontColor("#ffffff").setFontWeight("bold")
+    readSheet.getRange("A1").setValue('date')
+    readSheet.getRange("B1").setValue('title')
+    readSheet.getRange("C1").setValue('url')
+    readSheet.setColumnWidth(1, 200);
+    readSheet.setColumnWidth(2, 600);
+    readSheet.setColumnWidth(3, 200);
+
+    //変更トリガーを追加
+    ScriptApp.newTrigger("editMain")
+      .forSpreadsheet(spreadsheetId)
+      .onChange()
+      .create();
+
+    //rssトリガーを追加
+    ScriptApp.newTrigger("rss")
+      .timeBased()
+      .everyHours(3)
+      .create();
+
+  } catch (e) {
+    console.error('setUpErr:', e)
+    return
+  }
+}
 /**
  * 新しいシートの作成&名前を変更
  * @param {string} name - 変えたい名前
