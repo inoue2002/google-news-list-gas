@@ -11,7 +11,10 @@ const rss = () => {
   try {
     const lastUpdate = Utilities.formatDate(mySheet.getRange("E1").getValue(), "JST", "yyyy/MM/dd")
     console.log('最終更新日', lastUpdate)
-    targetUrl = `https://news.google.com/rss/search?q=${encodeURI(searchWord)}after:${lastUpdate}&gl=JP&ceid=JP:ja&hl=ja`
+    //最新のものだけアップデートしたい場合
+    //targetUrl = `https://news.google.com/rss/search?q=${encodeURI(searchWord)}after:${lastUpdate}&gl=JP&ceid=JP:ja&hl=ja`
+    //特に最新にはこだわらず、重複なくアップデートしたい場合
+    targetUrl = `https://news.google.com/rss/search?q=${encodeURI(searchWord)}&gl=JP&ceid=JP:ja&hl=ja`
   } catch (e) {
     targetUrl = `https://news.google.com/rss/search?q=${encodeURI(searchWord)}&gl=JP&ceid=JP:ja&hl=ja`
   }
